@@ -1,0 +1,80 @@
+
+#include <stdio.h>
+#include <stdlib.h>   
+
+struct stack {
+    int tos;
+    int size;
+    int *s;
+};
+
+struct stack sta;
+
+int isfull() { 
+    if(sta.tos == sta.size-1) 
+        return 1;
+    else 
+        return 0; 
+    } 
+    
+int isempty() { 
+    if(sta.tos == -1) 
+        return 1;
+    else 
+        return 0; 
+    
+    }
+
+void push(int n) {
+    if (isfull()) {
+        printf("Stack is full\n");
+    } else {
+        sta.tos++;
+        sta.s[sta.tos] = n;
+        printf("%d pushed to stack\n", n);
+    }
+}
+
+int pop() {
+    if (isempty()) {                      
+        printf("Stack is empty, can't pop\n");
+        return -1;                         
+    } else {
+        int popped_item = sta.s[sta.tos];
+        sta.tos--;
+        return popped_item;
+    }
+}
+
+int peek() {
+    if (isempty()) {
+        printf("Stack is empty\n");
+        return -1;                        
+    } else {
+        return sta.s[sta.tos];
+    }
+}
+
+int main() {
+    sta.tos = -1;
+    sta.size = 0;
+    sta.s = NULL;
+
+    printf("Enter the size = ");
+    scanf("%d", &sta.size);
+
+    sta.s = (int*)malloc(sizeof(int) * sta.size);
+    if (sta.s == NULL) {
+        printf("Memory allocation failed\n");
+        return 1;
+    }
+
+    push(10);
+    push(20);
+
+    printf("Top element: %d\n", peek());
+    printf("Popped: %d\n", pop());
+    printf("Top element after pop: %d\n", peek());
+
+    return 0;
+}
