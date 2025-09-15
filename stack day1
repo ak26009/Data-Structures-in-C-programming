@@ -91,3 +91,140 @@ int main() {
 
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+// Balancing of paranthesis
+
+#include <stdio.h>
+#include <stdlib.h>   // for malloc
+#include <string.h>   // for strlen
+
+struct stack {
+    int tos;
+    int size;
+    int *s;
+};
+
+struct stack sta;
+
+int isfull() { 
+    if(sta.tos == sta.size-1) 
+        return 1;
+    else 
+        return 0; 
+} 
+    
+int isempty() { 
+    if(sta.tos == -1) 
+        return 1;
+    else 
+        return 0; 
+}
+
+void push(int n) {
+    if (isfull()) {
+        printf("Stack is full\n");
+    } else {
+        sta.tos++;
+        sta.s[sta.tos] = n;
+        //printf("%d pushed to stack\n", n);
+    }
+}
+
+int pop() {
+    if (isempty()) {                      
+        printf("Stack is empty, can't pop\n");
+        return -1;                         
+    } else {
+        int popped_item = sta.s[sta.tos];
+        sta.tos--;
+        return popped_item;
+    }
+}
+
+int peek() {
+    if (isempty()) {
+        printf("Stack is empty\n");
+        return -1;                        
+    } else {
+        return sta.s[sta.tos];
+    }
+}
+
+int main() {
+    sta.tos = -1;
+    sta.size = 0;
+    sta.s = NULL;
+
+    printf("Enter the size = ");
+    scanf("%d", &sta.size);
+
+    sta.s = (int*)malloc(sizeof(int) * sta.size);
+    if (sta.s == NULL) {
+        printf("Memory allocation failed\n");
+        return 1;
+    }
+    
+    char a[100];
+    printf("Enter a string: ");
+    scanf("%s", a);  // just a (not a[i])
+
+    int flag = 0;
+    for(int i=0 ; i<strlen(a) ; i++){
+        char ch = a[i];
+        switch(ch){
+            case '(':
+            case '[':
+            case '{':
+                push(ch);
+                break;
+
+            case ')': 
+                if(!isempty() && peek()=='('){
+                    pop();
+                } else {
+                    flag = 1;
+                }
+                break;
+
+            case ']':
+                if(!isempty() && peek()=='['){
+                    pop();
+                } else {
+                    flag = 1;
+                }
+                break;
+
+            case '}':
+                if(!isempty() && peek()=='{'){
+                    pop();
+                } else {
+                    flag = 1;
+                }
+                break;
+
+            default : break;
+        }
+        if(flag==1) break;
+    }
+
+    if(flag==1){
+        printf("not balanced\n");
+    } else if(isempty()){
+        printf("balanced\n");
+    } else {
+        printf("unbalanced\n");
+    }
+
+    free(sta.s);
+    return 0;
+}
+
