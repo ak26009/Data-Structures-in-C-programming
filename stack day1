@@ -658,15 +658,21 @@ int main() {
         case '/':
         case '+':
         case '-':
-            while (!isempty() && prec(peek()) >= prec(ch)) {
-            output[j++] = pop();
-        }
-        push(ch);
-        break;
+        // pop all operators from stack that have higher or equal precedence
+        while (!isempty()) {
+                char top = peek();
+            if (prec(top) < prec(ch)) {
+                break;  // top operator has lower precedence, stop popping
+            }
+            output[j++] = pop();  // pop higher/equal precedence operator into output
+            }
+            push(ch);  // push the current operator onto the stack
+            break;
 
         default:
-        output[j++] = ch;
-        break;
+            output[j++] = ch;  // operand goes directly to output
+            break;
+
         
     }// switch
     
