@@ -148,7 +148,6 @@ int pop(){
         sta.tos--;
         return popitem;
     }
-    
 }
 
 int peek(){
@@ -158,7 +157,6 @@ int peek(){
     }else{
         return sta.s[sta.tos];
     }
-    
 }
 
 int main()
@@ -168,51 +166,61 @@ int main()
     sta.s = NULL;
     int i;
     int op;
-    
+    int push1;  // <-- moved here so case 3 can use it
+
     printf("Enter the size : ");
     scanf("%d",&sta.size);
-    
+
     sta.s = (int*)malloc(sizeof(int)*sta.size);
     if(sta.s == NULL){
         printf("Memory allocation failed");
         return 1;
     }
-    
+
     while(1){
         printf("\nEnter the operation\n");
         printf("1.isfull\n 2.isempty\n 3.push\n 4.pop\n 5.peek\n");
         scanf("%d",&op);
-        
-        switch(op){
-            case 1 : if(isfull){
-                printf("stack is full");
-            }else{
-                printf("stack is empty");
-            }
-                    break;
-                    
-            case 2 : if (isempty()) {
-                printf("Stack is empty\n");
-            } else {
-                printf("Stack is not empty\n");
-            }
 
-            case 3 :int push1;
-                    printf("Enter the value you want to push");
-                    scanf("%d",&push1);
-                    push(push1);
-                    break;
-            case 4 : printf("poped element %d",pop());
-                    break;
+        switch(op){
+            case 1 : 
+                if(isfull()) {
+                    printf("stack is full\n");
+                } else {
+                    printf("stack is not full\n");
+                }
+                break;
+
+            case 2 : 
+                if (isempty()) {
+                    printf("Stack is empty\n");
+                } else {
+                    printf("Stack is not empty\n");
+                }
+                break;   // <-- added break here
+
+            case 3 :
+                printf("Enter the value you want to push: ");
+                scanf("%d",&push1);
+                push(push1);
+                break;
+
+            case 4 : 
+                printf("popped element %d\n",pop());
+                break;
+
             case 5 : 
-                    printf("top element %d",peek());
-                    break;
-            default : printf("Enter a valid operation");
-                    break;
+                printf("top element %d\n",peek());
+                break;
+
+            default : 
+                printf("Enter a valid operation\n");
+                break;
         }
     }
     return 0;
 }
+
 
 
 
