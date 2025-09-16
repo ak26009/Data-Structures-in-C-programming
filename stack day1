@@ -5,6 +5,7 @@
 // pop()
 // peek()
 
+// IMP always write the function braces() otherwise it won't worl properly
 #include <stdio.h>
 #include <stdlib.h>   
 
