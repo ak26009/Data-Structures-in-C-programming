@@ -515,3 +515,170 @@ int main() {
 }
 
 
+
+
+
+
+
+
+
+
+// Simpler Way for infix to prefix
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>   // <-- added
+
+struct stack {
+    int tos;
+    int size;
+    int* s;    
+};
+
+struct stack sta;
+
+int isfull() {
+    return (sta.tos == sta.size - 1);
+}
+
+int isempty() {
+    return (sta.tos == -1);
+}
+
+void push(int n) {
+    if (isfull()) {
+        printf("Stack is full\n");
+    } else {
+        sta.tos++;
+        sta.s[sta.tos] = n;
+    }
+}
+
+int pop() {
+    if (isempty()) {
+        printf("The stack is empty\n");
+        return -1;
+    } else {
+        int popitem = sta.s[sta.tos];
+        sta.tos--;
+        return popitem;
+    }
+}
+
+int peek() {
+    if (isempty()) {
+        return -1;
+    } else {
+        return sta.s[sta.tos];
+    }
+}
+
+int prec(char c) {
+    switch (c) {
+        case '*':
+        case '/': return 2;
+        case '+':
+        case '-': return 1;
+        case '(':
+        case '[':
+        case '{': return 0;
+        default: return -1;    // <-- added
+    }
+}
+
+int main() {
+    sta.tos = -1;
+    sta.size = 0;
+    sta.s = NULL;
+    int op;
+    int push1; 
+    int j = 0;
+
+    char input[100];
+    char output[100];
+
+    printf("Enter the size : ");
+    scanf("%d", &sta.size);
+
+    sta.s = (int*)malloc(sizeof(int) * sta.size);
+    if (sta.s == NULL) {
+        printf("Memory allocation failed");
+        return 1;
+    }
+
+    printf("Enter the expression: ");
+    scanf("%s", input);  
+
+    for (int i = 0; i < (int)strlen(input); i++) {
+        char ch = input[i];
+
+        switch (ch) {
+        case '(':
+        case '[':
+        case '{': push(ch);
+        break;
+
+        case ')':
+            // pop until '('
+            while (!isempty()) {
+            char top = peek();
+            if (top == '(') {
+                pop();  // remove '(' and stop
+                break;
+            }
+            output[j++] = pop();   // pop operators into output
+        }
+        break;
+
+        case ']':
+            // pop until '['
+            while (!isempty()) {
+            char top = peek();
+            if (top == '[') {
+                pop();  // remove '[' and stop
+                break;
+            }
+            output[j++] = pop();   // pop operators into output
+        }
+        break;
+
+        case '}':
+            // pop until '{'
+            while (!isempty()) {
+            char top = peek();
+            if (top == '{') {
+                pop();  // remove '{' and stop
+                break;
+            }
+            output[j++] = pop();   // pop operators into output
+        }
+        break;
+
+        case '*':
+        case '/':
+        case '+':
+        case '-':
+            while (!isempty() && prec(peek()) >= prec(ch)) {
+            output[j++] = pop();
+        }
+        push(ch);
+        break;
+
+        default:
+        output[j++] = ch;
+        break;
+        
+    }// switch
+    
+}//for
+
+    while (!isempty()) {
+        output[j++] = pop();
+    }
+    output[j] = '\0';    // <-- terminate string
+    printf("Postfix expression: %s\n", output);
+
+    return 0;
+}//main
+
+
