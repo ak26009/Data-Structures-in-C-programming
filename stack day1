@@ -102,6 +102,129 @@ int main() {
 
 
 
+// User chooses the operation here 
+#include <stdio.h>
+#include <stdlib.h>
+
+struct stack
+{
+    int tos;
+    int size ;
+    int* s ;    
+};
+
+struct stack sta;
+
+int isfull(){
+    if(sta.tos == sta.size-1)
+        return 1;
+    else
+        return 0;
+}
+
+int isempty(){
+    if(sta.tos == -1)
+        return 1;
+    else
+        return 0;
+}
+
+void push(int n){
+    if(isfull()){
+        printf("Stack is full\n");
+    }else{
+        sta.tos++;
+        sta.s[sta.tos] = n;
+        printf("%d is pushed into the stack\n",n);
+    }
+}
+
+int pop(){
+    if(isempty()){
+        printf("The stack is empty\n");
+        return -1;
+    }else{
+        int popitem = sta.s[sta.tos];
+        sta.tos--;
+        return popitem;
+    }
+    
+}
+
+int peek(){
+    if(isempty()){
+        printf("The stack is empty\n");
+        return -1;
+    }else{
+        return sta.s[sta.tos];
+    }
+    
+}
+
+int main()
+{
+    sta.tos = -1;
+    sta.size = 0;
+    sta.s = NULL;
+    int i;
+    int op;
+    
+    printf("Enter the size : ");
+    scanf("%d",&sta.size);
+    
+    sta.s = (int*)malloc(sizeof(int)*sta.size);
+    if(sta.s == NULL){
+        printf("Memory allocation failed");
+        return 1;
+    }
+    
+    while(1){
+        printf("\nEnter the operation\n");
+        printf("1.isfull\n 2.isempty\n 3.push\n 4.pop\n 5.peek\n");
+        scanf("%d",&op);
+        
+        switch(op){
+            case 1 : if(isfull){
+                printf("stack is full");
+            }else{
+                printf("stack is empty");
+            }
+                    break;
+                    
+            case 2 : if (isempty()) {
+                printf("Stack is empty\n");
+            } else {
+                printf("Stack is not empty\n");
+            }
+
+            case 3 :int push1;
+                    printf("Enter the value you want to push");
+                    scanf("%d",&push1);
+                    push(push1);
+                    break;
+            case 4 : printf("poped element %d",pop());
+                    break;
+            case 5 : 
+                    printf("top element %d",peek());
+                    break;
+            default : printf("Enter a valid operation");
+                    break;
+        }
+    }
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 // Balancing of paranthesis
 
 #include <stdio.h>
