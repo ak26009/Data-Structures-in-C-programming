@@ -892,3 +892,243 @@ int main(){
     return 0;
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+struct stack{
+  int tos;
+  int size;
+  int*s;
+};
+
+struct stack sta;
+int isfull(){
+    if(sta.tos == sta.size-1)
+        return 1;
+    else
+        return 0;
+}
+
+int isempty(){
+    if(sta.tos == -1)
+        return 1;
+    else
+        return 0;
+}
+
+void push(int n){
+    if(isfull()){
+        printf("Stack is full");
+    }else{
+        sta.tos++;
+        sta.s[sta.tos] = n;
+        printf("%d is pushed into the stack\n",n);
+    }
+}
+
+int pop(){
+    if(isempty()){
+        printf("The stack is empty");
+        
+    }else{
+        int popitem = sta.s[sta.tos];
+        sta.tos--;
+        return popitem;
+    }    
+}
+
+int peek(){
+    if(isempty()){
+        printf("The stack is empty");
+        return -1;
+    }else{
+        int popitem = sta.s[sta.tos];
+        return popitem;
+    }
+}
+
+void display(){
+    if(sta.tos == -1){
+        printf("Stack is empty");
+    }
+    else{
+        for(int i=sta.tos ; i>=0 ; i--){
+            printf("%d\t",sta.s[i]);
+        }
+    }
+}
+
+void reverse(char a[]){
+    
+    int len = strlen(a); 
+    for(int i = 0 ; i<len/2 ; i++){
+        int temp = a[i];
+        a[i] = a[len-1-i];
+        a[len-1-i] = temp;
+    }
+}
+
+int prec(char c) {
+    switch (c) {
+        case '*':
+        case '/': return 2;
+        case '+':
+        case '-': return 1;
+        case '(':
+        case '[':
+        case '{': return 0;
+        default: return -1;    // <-- added
+    }
+}
+
+int main(){
+    sta.tos = -1;
+    sta.size = 0;
+    sta.s = NULL;
+    char input[100];
+    char output[100];
+    int j = 0 ;
+    
+    printf("Enter the size = ");
+    scanf("%d",&sta.size);
+    
+    sta.s = (int*)malloc(sizeof(int)*sta.size);
+    
+    if(sta.s == NULL){
+        printf("Memoryallocation failed");
+        return 1;
+    }
+    
+    printf("Enter the string ");
+    scanf("%s",input);
+    
+    reverse(input);
+    printf("the reverse string is %s",input);
+    
+    for (int i = 0; i < strlen(input); i++) {
+        char ch = input[i];
+        
+        
+        switch (ch) {
+        case ')':
+        case ']':
+        case '}': push(ch);
+        break;
+
+        case '(':
+            // pop until '('
+            while (!isempty()) {
+            char top = peek();
+            if (top == ')') {
+                pop();  // remove '(' and stop
+                break;
+            }
+            output[j++] = pop();   // pop operators into output
+        }
+        break;
+
+        case '[':
+            // pop until '['
+            while (!isempty()) {
+            char top = peek();
+            if (top == ']') {
+                pop();  // remove '[' and stop
+                break;
+            }
+            output[j++] = pop();   // pop operators into output
+        }
+        break;
+
+        case '{':
+            // pop until '{'
+            while (!isempty()) {
+            char top = peek();
+            if (top == '}') {
+                pop();  // remove '{' and stop
+                break;
+            }
+            output[j++] = pop();   // pop operators into output
+        }
+        break;
+
+        case '*':
+        case '/':
+        case '+':
+        case '-':
+        // pop all operators from stack that have higher or equal precedence
+        while (!isempty()) {
+                char top = peek();
+            if (prec(top) < prec(ch)) {
+                break;  // top operator has lower precedence, stop popping
+            }
+            output[j++] = pop();  // pop higher/equal precedence operator into output
+            }
+            push(ch);  // push the current operator onto the stack
+            break;
+
+        default:
+            output[j++] = ch;  // operand goes directly to output
+            break;
+
+        
+    }// switch
+    
+}//for
+
+    while (!isempty()) {
+        output[j++] = pop();
+    }
+    output[j] = '\0';// <-- terminate string
+    
+    reverse(output);
+    printf("Postfix expression: %s\n", output);
+    
+    int a,b,c;
+    for(int i=0 ; i<strlen(output); i++){
+        char ch =output[i];
+        switch(ch){
+            case '+': a = pop();
+                    b = pop();
+                    c = b+a;
+                    push(c);
+                    break;
+            case '-': a = pop();
+                    b = pop();
+                    c = b-a;
+                    push(c);
+                    break;
+            case '*': a = pop();
+                    b = pop();
+                    c = b*a;
+                    push(c);
+                    break;
+            case '/': a = pop();
+                    b = pop();
+                    c = b/a;
+                    push(c);
+                    break;
+            
+            default : push(atoi(&ch));
+                    break;
+        }
+    }
+    printf("evaluation %d",pop());
+    return 0;
+    
+}
