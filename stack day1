@@ -812,7 +812,7 @@ int main(){
     
     reverse(input);
     printf("the reverse string is %s",input);
-    for (int i = 0; i < (int)strlen(input); i++) {
+    for (int i = 0; i < strlen(input); i++) {
         char ch = input[i];
 
         switch (ch) {
