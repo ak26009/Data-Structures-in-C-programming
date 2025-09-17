@@ -373,7 +373,7 @@ int main() {
 
 
 
-// infix to prefix
+// infix to postfix
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -523,7 +523,7 @@ int main() {
 
 
 
-// Simpler Way for infix to prefix
+// Simpler Way for infix to postfix
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -698,7 +698,7 @@ int main() {
 
 
 
-// Simpler Way for infix to postfix
+// Simpler Way for infix to prefix
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
