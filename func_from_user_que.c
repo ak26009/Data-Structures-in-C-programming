@@ -30,13 +30,14 @@ int underflow(){
 // to add elements from rear
 void enque(int n){
     if(overflow()){
-        printf("Queue is full, cant add\n");
+        printf("\nQueue is full, cant add\n");
     }else{
         if(que.front == -1){
             que.front++;
         }
         que.rear++;
         que.q[que.rear] = n;
+        printf("\n%d is added in the que\n",n);
         }
     }
 
@@ -44,7 +45,7 @@ void enque(int n){
 int deque(){
     int x =-1;
     if(underflow()){
-        printf("Queue is empty !\n");
+        printf("\nQueue is empty !\n");
     }else{
         x = que.q[que.front];
         if(que.front == que.rear){
@@ -59,6 +60,7 @@ int deque(){
 
 void display(){
     if(!underflow()){
+        printf("Que = ");
         for(int i=que.front ; i<=que.rear ; i++){
             printf("%d\t",que.q[i]);
         }
@@ -84,12 +86,13 @@ int main()
         printf("Memory allocation failed\n");
         return 1;
     }
-    
+
     while(1){
         printf("\nOperations on Queue\n");
         printf("\n1.Enque(add elements)\n");
         printf("\n2.Deque(del elements)\n");
         printf("\n3.Display\n");
+        printf("\nEnter the number = ");
         scanf("%d",&operation);
         
         switch(operation){
