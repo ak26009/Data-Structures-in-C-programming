@@ -179,7 +179,7 @@ int main()
 
     while(1){
         printf("\nEnter the operation\n");
-        printf("1.isfull\n 2.isempty\n 3.push\n 4.pop\n 5.peek\n");
+        printf("1.isfull\n 2.isempty\n 3.push\n 4.pop\n 5.peek\n 6.exit\n");
         scanf("%d",&op);
 
         switch(op){
@@ -211,6 +211,9 @@ int main()
 
             case 5 : 
                 printf("top element %d\n",peek());
+                break;
+            case 6:
+                exit(0);
                 break;
 
             default : 
