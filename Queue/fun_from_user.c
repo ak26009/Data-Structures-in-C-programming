@@ -92,6 +92,7 @@ int main()
         printf("\n1.Enque(add elements)\n");
         printf("\n2.Deque(del elements)\n");
         printf("\n3.Display\n");
+        printf("\n4.Exit\n");
         printf("\nEnter the number = ");
         scanf("%d",&operation);
         
@@ -104,6 +105,8 @@ int main()
                     break;
             case 3 : display();
                     break;
+          case 4: exit(0);
+                  break;
             default : printf("Invalid expression");
         }   
     }
