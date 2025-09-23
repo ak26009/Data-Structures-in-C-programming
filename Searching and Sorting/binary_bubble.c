@@ -26,7 +26,9 @@ int main(){
     for(int i =0 ; i<len ; i++){
         printf("%d\t",arr[i]);
     }
-    
+
+
+    // Binary Search
     int s,low,high,mid;
     int flag = 0;
     printf("\nEnter the value you want to search ");
