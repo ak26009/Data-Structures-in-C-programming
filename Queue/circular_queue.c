@@ -61,15 +61,16 @@ int deque(){
 void display(){
     if(!underflow()){
         printf("Que = ");
-        for(int i=que.front ; i != que.rear ; i = (i+1)%que.size){
-            printf("%d\t",que.q[i]);
-            printf("%d",que.q[que.rear]);
+        for(int i = que.front; i != que.rear; i = (i+1)%que.size){
+            printf("%d\t", que.q[i]);  // print each element except rear
         }
+        printf("%d", que.q[que.rear]); // print rear element once
         printf("\n");
-    }else{
+    } else {
         printf("Que is empty\n");
     }
 }
+
 
 int main()
 {
