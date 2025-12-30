@@ -6,9 +6,8 @@ struct queue{
   int rear;
   int size;
   int *q;
-};
+}que;
 
-struct queue que;
 // full
 int overflow(){
     if(que.rear == que.size-1)
@@ -16,6 +15,7 @@ int overflow(){
     else
         return 0;
 }
+
 // empty
 int underflow(){
     if(que.rear == -1 && que.front == -1)
@@ -23,6 +23,7 @@ int underflow(){
     else
         return 0;
 }
+
 // to add elements from rear
 void enque(int n){
     if(overflow()){
@@ -35,6 +36,7 @@ void enque(int n){
         que.q[que.rear] = n;
         }
     }
+
 // to delete elements from front
 int deque(){
     int x =-1;
@@ -52,6 +54,7 @@ int deque(){
     }
 }
 
+// to display the first element
 void display(){
     if(!underflow()){
         for(int i=que.front ; i<=que.rear ; i++){
