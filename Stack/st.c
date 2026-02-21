@@ -90,6 +90,11 @@ int main()
 
     st.s = (int*)malloc(sizeof(int)*st.size);
 
+    if(st.s == NULL){
+        printf("Memory Allocation Failed!");
+        return 1;
+    }
+
     while(1){
         int op;
         printf("Enter the function you want to perform!\n");
